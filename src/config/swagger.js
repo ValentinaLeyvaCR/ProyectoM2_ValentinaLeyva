@@ -11,7 +11,7 @@ const swaggerSpec = {
 
     servers: [
         {
-            url: "http://localhost:3000"
+            url: process.env.NODE_ENV = 'production' ? "https://proyectom2valentinaleyva-production.up.railway.app" : "http://localhost:3000"
         }
     ],
 
