@@ -1,9 +1,8 @@
 //RESPONSABILIDAD DEL INDEX.JS: levantar el servidor y la conexion con la base de datos.
 const {pool} = require("./src/config/dbConnect.js")
+const {PORT} = require("./src/config/envs.js")
 const { inicializateDatabase } = require("./src/config/initDb.js")
 const {server} = require("./src/server.js")
-const { loadEnvFile } = require("node:process") //este modulo es para cargar las variables de entorno desde el archivo .env
-loadEnvFile('.env') //esto es para cargar las variables de entorno desde el archivo .env 
 
 
 const startServer = async () => { // es una funcion asincrona porque la conexion a la base de datos es asincrona
@@ -11,8 +10,8 @@ const startServer = async () => { // es una funcion asincrona porque la conexion
     await inicializateDatabase() // esto es para inicializar la base de datos, crear las tablas y los datos iniciales
     console.log("conexion a la base de datos establecida correctamente")
     
-    server.listen(process.env.PORT, () =>{ // esto es para levantar el servidor en el puerto 3000
-        console.log(`server listen on port: ${process.env.PORT}`);
+    server.listen(PORT, () =>{ // esto es para levantar el servidor en el puerto 3000
+        console.log(`server listen on port: ${PORT}`);
     })
 }
 

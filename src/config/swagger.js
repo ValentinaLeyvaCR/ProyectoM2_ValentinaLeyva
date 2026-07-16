@@ -4,7 +4,7 @@ const swaggerSpec = {
     openapi: "3.0.3",
 
     info: {
-        title: "API Blog",
+        title: "API MiniBlog",
         version: "1.0.0",
         description: "API REST para la gestión de autores y posts."
     },
