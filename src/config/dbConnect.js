@@ -1,3 +1,5 @@
+//RESPONSABILIDAD DE DBCONNECT.JS: CONECTAR A LA BASE DE DATOS Y EXPORTAR EL POOL PARA USARLO EN OTROS ARCHIVOS
+
 const { Pool } = require("pg")
 const { loadEnvFile } = require("node:process")
 loadEnvFile(".env")
