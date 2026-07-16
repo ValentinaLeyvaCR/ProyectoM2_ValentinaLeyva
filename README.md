@@ -1,19 +1,19 @@
 # 📚 API REST - Authors & Posts
 
-API REST desarrollada con **Node.js**, **Express** y **PostgreSQL** como Proyecto Integrador del Módulo 2.
+API REST desarrollada con **Node.js**, **Express** y **PostgreSQL** como Proyecto Integrador del Módulo 2 de Henry.
 
-Permite gestionar autores y publicaciones mediante operaciones CRUD, utilizando una arquitectura por capas (Routes, Controllers, Services y Middlewares).
+La aplicación permite administrar autores y publicaciones mediante operaciones CRUD completas, siguiendo una arquitectura por capas y utilizando PostgreSQL como sistema de persistencia.
 
 ---
 
 # 📌 Descripción
 
-Esta API permite administrar un blog sencillo mediante dos entidades relacionadas:
+Esta API administra un blog sencillo mediante dos entidades relacionadas:
 
 - **Authors** (Autores)
 - **Posts** (Publicaciones)
 
-Cada autor puede tener múltiples publicaciones, implementando una relación **1:N** en PostgreSQL.
+Cada autor puede tener múltiples publicaciones, implementando una relación **uno a muchos (1:N)** entre ambas entidades.
 
 Toda la información se almacena de forma persistente en una base de datos PostgreSQL.
 
@@ -21,17 +21,17 @@ Toda la información se almacena de forma persistente en una base de datos Postg
 
 # ✨ Funcionalidades
 
-## Authors
+## 👤 Authors
 
-- Crear autores.
+- Crear un autor.
 - Listar todos los autores.
 - Obtener un autor por ID.
 - Actualizar un autor.
 - Eliminar un autor.
 
-## Posts
+## 📝 Posts
 
-- Crear publicaciones.
+- Crear una publicación.
 - Listar todas las publicaciones.
 - Obtener una publicación por ID.
 - Obtener todas las publicaciones de un autor.
@@ -46,157 +46,193 @@ Toda la información se almacena de forma persistente en una base de datos Postg
 - Express
 - PostgreSQL
 - pg
-- Swagger UI
-- Supertest
+- Swagger UI Express
+- Swagger (OpenAPI 3.0)
 - Vitest
-- Railway (Deployment)
+- Supertest
+- Railway
 
 ---
 
 # 📂 Estructura del proyecto
 
 ```text
-api
+PROYECTOM2_VALENTINALEYVA
 │
-├── src
-│   ├── config
+├── api
+│   ├── node_modules
+│   │
+│   ├── src
+│   │
+│   │── config
 │   │   ├── dbConnect.js
+│   │   ├── envs.js
 │   │   ├── initDb.js
 │   │   └── swagger.js
 │   │
-│   ├── controllers
+│   │── controllers
 │   │   ├── authors.controller.js
 │   │   └── post.controller.js
 │   │
-│   ├── middlewares
+│   │── middlewares
+│   │   ├── authorCreateMiddleware.js
 │   │   ├── genMiddleware.js
-│   │   ├── postCreateMiddleware.js
-│   │   └── userCreateMiddleware.js
+│   │   └── postCreateMiddleware.js
 │   │
-│   ├── routes
+│   │── routes
 │   │   ├── authors.routes.js
 │   │   └── post.routes.js
 │   │
-│   ├── services
+│   │── services
 │   │   ├── authors.services.js
 │   │   └── post.services.js
 │   │
-│   ├── test
+│   │── test
 │   │   └── middleware.test.js
 │   │
-│   └── server.js
-│
-├── .env.example
-├── index.js
-├── package.json
-└── README.md
+│   ├── server.js
+│   ├── index.js
+│   ├── .env
+│   ├── .env.example
+│   ├── .gitignore
+│   ├── package.json
+│   ├── package-lock.json
+│   └── README.md
 ```
 
 ---
 
 # 🗄️ Modelo de Base de Datos
 
-## Tabla authors
+La base de datos está compuesta por dos tablas relacionadas.
+
+## Tabla **authors**
 
 | Campo | Tipo |
 |--------|------|
 | id | SERIAL |
-| name | VARCHAR |
-| email | VARCHAR UNIQUE |
+| name | VARCHAR(100) |
+| email | VARCHAR(150) UNIQUE |
 | bio | TEXT |
-| created_at | TIMESTAMP |
+| created_at | TIMESTAMPTZ |
 
-## Tabla posts
+## Tabla **posts**
 
 | Campo | Tipo |
 |--------|------|
 | id | SERIAL |
 | author_id | INTEGER (FK) |
-| title | VARCHAR |
+| title | VARCHAR(200) |
 | content | TEXT |
 | published | BOOLEAN |
-| created_at | TIMESTAMP |
+| created_at | TIMESTAMPTZ |
 
-Relación:
+### Relación entre tablas
 
+```text
+Authors (1)
+      │
+      │
+      └───────────────< Posts (N)
+
+Relación: Uno a Muchos (1:N)
 ```
-Author
-   │
-   ├─────────────< Posts
 
-   Uno a muchos
-```
+Un autor puede tener muchas publicaciones, mientras que cada publicación pertenece únicamente a un autor.
 
 ---
 
 # 🚀 Instalación
 
-## Clonar el repositorio
+## 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/ValentinaLeyvaCR/ProyectoM2_ValentinaLeyva
+git clone https://github.com/ValentinaLeyvaCR/ProyectoM2_ValentinaLeyva.git
 ```
 
-Entrar al proyecto
+## 2. Ingresar al proyecto
 
 ```bash
-cd api
+cd ProyectoM2_ValentinaLeyva/api
 ```
 
-Instalar dependencias
+## 3. Instalar dependencias
 
 ```bash
 npm install
 ```
 
-Crear el archivo `.env`
+## 4. Configurar las variables de entorno
 
-Tomar como base el archivo:
+Crear un archivo **.env** tomando como referencia el archivo:
 
-```
+```text
 .env.example
 ```
 
-Completar con los datos de conexión a PostgreSQL.
+Completar los datos de conexión a PostgreSQL.
+
+Ejemplo:
+
+```env
+PORT=3000
+
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=nombre_base_datos
+DB_USER=postgres
+DB_PASSWORD=tu_contraseña
+
+DB_MAX_CONNECT=20
+DB_IDLETIMEOUT=30000
+DB_CONNECTIONTIMEOUT=2000
+
+NODE_ENV=development
+```
 
 ---
 
 # ▶️ Ejecutar el proyecto
 
-Modo desarrollo
+Modo desarrollo:
 
 ```bash
 npm run dev
+```
+
+Modo producción:
+
+```bash
+npm start
 ```
 
 ---
 
 # 🧪 Ejecutar los tests
 
+Para ejecutar las pruebas automatizadas:
+
 ```bash
 npm test
 ```
 
-Los tests fueron realizados utilizando:
+Los tests fueron desarrollados utilizando:
 
 - Vitest
 - Supertest
 
----
+Actualmente se validan casos como:
 
-# 📖 Documentación Swagger
-
-Una vez iniciado el servidor, la documentación se encuentra disponible en:
-
-```
-http://localhost:3000/api-docs
-```
-
-Desde Swagger es posible consultar todos los endpoints disponibles.
+- Creación de autores.
+- Consulta de autores.
+- Validación de datos obligatorios.
+- Respuestas HTTP.
+- Funcionamiento del servidor.
 
 ---
 
-# 📌 Endpoints
+
+# 📌 Endpoints disponibles
 
 ## Authors
 
@@ -230,23 +266,23 @@ Desde Swagger es posible consultar todos los endpoints disponibles.
 - Nombre obligatorio.
 - Email obligatorio.
 - Email único.
+- Manejo de errores de base de datos.
 
 ## Posts
 
 - author_id obligatorio.
 - title obligatorio.
 - content obligatorio.
+- Validación de recursos inexistentes.
 
 ---
 
-# 📋 Respuestas HTTP
+# 📋 Códigos de respuesta HTTP
 
-La API utiliza los siguientes códigos de estado:
-
-| Código | Significado |
+| Código | Descripción |
 |---------|-------------|
-| 200 | Operación exitosa |
-| 201 | Recurso creado |
+| 200 | Operación realizada correctamente |
+| 201 | Recurso creado correctamente |
 | 400 | Error de validación |
 | 404 | Recurso no encontrado |
 | 500 | Error interno del servidor |
@@ -255,21 +291,21 @@ La API utiliza los siguientes códigos de estado:
 
 # 🤖 Uso de Inteligencia Artificial
 
-Durante el desarrollo del proyecto se utilizó ChatGPT como herramienta de apoyo para:
+Durante el desarrollo del proyecto se utilizó **ChatGPT** como herramienta de apoyo para:
 
 - Resolver errores durante el desarrollo.
-- Elaborar pruebas con Supertest y Vitest.
-- Documentar la API utilizando Swagger/OpenAPI.
+- Comprender mensajes de error de PostgreSQL.
+- Elaborar pruebas automatizadas con Vitest y Supertest.
 
 
+---
 
 # 🌐 Deployment
 
-La API fue desplegada utilizando Railway.
+La API fue desplegada utilizando **Railway**.
 
-URL pública:
+### Aplicación
+https://proyectom2valentinaleyva-production.up.railway.app/
 
-```
-https://AQUI-LA-URL-DE-RAILWAY.app
-```
-
+### Documentación Swagger
+https://proyectom2valentinaleyva-production.up.railway.app/api-docs/
