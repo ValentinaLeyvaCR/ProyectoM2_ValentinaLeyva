@@ -2,7 +2,7 @@
 
 const {Router} = require("express")
 const {getWellcomeController, getAuthorsController, getAuthorsByIdController, createUserController, updateAuthorController, deleteAuthorController} = require("../controllers/authors.controller")
-const { authorCreateMiddleware } = require("../middlewares/userCrearteMiddleware")
+const { authorCreateMiddleware } = require("../middlewares/authorCrearteMiddleware")
 
 const router = Router()
 
