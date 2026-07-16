@@ -1,18 +1,25 @@
-const userCreateMiddleware = (req, res, next) => {
-    const { name, role } = req.body
-    if (!name || !role) {
-        return res.status(400).json({
-            message: 'no se envio toda la informacion necesaria para crear el usuario, falta el name o el role'
-        })
+// RESPONSABILIDAD DEL MIDDLEWARE:
+// Validar la información antes de llegar al controller.
 
-        if (role !== 'student') {
-            return res.status(400).json({
-                message: 'el role debe ser "student"'
-            })
-        }
-    } next()
-}
+const authorCreateMiddleware = (req, res, next) => {
+
+    const { name, email } = req.body;
+
+    if (!name || name.trim() === "") {
+        return res.status(400).json({
+            message: "El nombre es obligatorio."
+        });
+    }
+
+    if (!email || email.trim() === "") {
+        return res.status(400).json({
+            message: "El email es obligatorio."
+        });
+    }
+
+    next();
+};
 
 module.exports = {
-    userCreateMiddleware
-}
+    authorCreateMiddleware
+};

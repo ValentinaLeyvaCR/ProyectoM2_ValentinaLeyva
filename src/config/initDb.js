@@ -4,21 +4,32 @@ const { pool } = require("./dbConnect");
 
 const inicializateDatabase = async () => {
 
-    await pool.query(
-    `CREATE TABLE IF NOT EXISTS users (
-     id SERIAL PRIMARY KEY,
-     name VARCHAR(120) NOT NULL,
-     role VARCHAR(20) NOT NULL DEFAULT 'student'
-    )`
-    )
-
-const { rows } = await pool.query(`SELECT COUNT(*)::int AS count FROM users`)
-if (rows[0].count === 0) {
     await pool.query(`
-        INSERT INTO users (name, role) VALUES ($1,$2), ($3,$4)`,
-        ['valentina', 'student', 'sebastian', 'teacher']
-    )
-}
+        CREATE TABLE IF NOT EXISTS authors(
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(120) NOT NULL,
+            email VARCHAR(120) UNIQUE NOT NULL,
+            bio TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    `);
+
+    await pool.query(`
+    CREATE TABLE IF NOT EXISTS posts(
+        id SERIAL PRIMARY KEY,
+        author_id INTEGER NOT NULL,
+        title VARCHAR(200) NOT NULL,
+        content TEXT NOT NULL,
+        published BOOLEAN DEFAULT false,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+        CONSTRAINT fk_author
+        FOREIGN KEY(author_id)
+        REFERENCES authors(id)
+        ON DELETE CASCADE
+    );
+`);
+
 }
 
 module.exports = {
