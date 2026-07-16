@@ -3,6 +3,7 @@
 // 2. llamar a un servicio encargado de traer la informacion de la base de datos
 // 3. responder al cliente de forma adecuada 
 
+const { requestLogger } = require("../middlewares/userCrearteMiddleware")
 const { getUsersService, getUsersByIdService, createUserService } = require("../services/user.services")
 
 

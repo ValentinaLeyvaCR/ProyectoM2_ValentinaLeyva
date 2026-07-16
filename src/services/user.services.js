@@ -15,7 +15,8 @@ const getUsersByIdService = async (id) => {//el id que se recibe por parametro e
 }
 
 const createUserService = async (name, role) => {
-    const { rows } = await pool.query(`INSERT INTO users (name, role) VALUES ($1, $2) RETURNING *`, [name, role])
+    const { rows } = await pool.query(`INSERT INTO users (name, role) 
+        VALUES ($1, $2) RETURNING id, name, role`, [name, role])
     return rows //retorna el primer objeto del array rows, que es el usuario creado
 }
 

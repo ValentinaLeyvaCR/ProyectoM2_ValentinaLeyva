@@ -2,6 +2,7 @@
 
 const {Router} = require("express")
 const {getWellcomeController, getUsersController, getUsersByIdController, createUserController} = require("../controllers/users.controller")
+const { userCreateMiddleware } = require("../middlewares/userCrearteMiddleware")
 
 const router = Router()
 
@@ -11,7 +12,7 @@ router.get("/users", getUsersController)
 
 router.get("/users/:id", getUsersByIdController)
 
-router.post("/users", createUserController)
+router.post("/users", userCreateMiddleware, createUserController) //el middleware se ejecuta antes del controller, si el middleware no llama a next() el controller no se ejecuta
 
 module.exports = {
     router
