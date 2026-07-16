@@ -19,6 +19,18 @@ Toda la información se almacena de forma persistente en una base de datos Postg
 
 ---
 
+# 🌐 Deployment
+
+## 🚀 Aplicación
+
+https://proyectom2valentinaleyva-production.up.railway.app/
+
+## 📖 Documentación Swagger
+
+https://proyectom2valentinaleyva-production.up.railway.app/api-docs/
+
+---
+
 # ✨ Funcionalidades
 
 ## 👤 Authors
@@ -60,34 +72,40 @@ Toda la información se almacena de forma persistente en una base de datos Postg
 PROYECTOM2_VALENTINALEYVA
 │
 ├── api
+│   ├── Capturas IA
+│   │   ├── correccion de errores 2.png
+│   │   ├── correccion de errores.png
+│   │   ├── pg 1.png
+│   │   └── test.png
+│   │
 │   ├── node_modules
 │   │
 │   ├── src
 │   │
-│   │── config
+│   ├── config
 │   │   ├── dbConnect.js
 │   │   ├── envs.js
 │   │   ├── initDb.js
 │   │   └── swagger.js
 │   │
-│   │── controllers
+│   ├── controllers
 │   │   ├── authors.controller.js
 │   │   └── post.controller.js
 │   │
-│   │── middlewares
+│   ├── middlewares
 │   │   ├── authorCreateMiddleware.js
 │   │   ├── genMiddleware.js
 │   │   └── postCreateMiddleware.js
 │   │
-│   │── routes
+│   ├── routes
 │   │   ├── authors.routes.js
 │   │   └── post.routes.js
 │   │
-│   │── services
+│   ├── services
 │   │   ├── authors.services.js
 │   │   └── post.services.js
 │   │
-│   │── test
+│   ├── test
 │   │   └── middleware.test.js
 │   │
 │   ├── server.js
@@ -194,13 +212,13 @@ NODE_ENV=development
 
 # ▶️ Ejecutar el proyecto
 
-Modo desarrollo:
+## Modo desarrollo
 
 ```bash
 npm run dev
 ```
 
-Modo producción:
+## Modo producción
 
 ```bash
 npm start
@@ -230,7 +248,6 @@ Actualmente se validan casos como:
 - Funcionamiento del servidor.
 
 ---
-
 
 # 📌 Endpoints disponibles
 
@@ -294,18 +311,8 @@ Actualmente se validan casos como:
 Durante el desarrollo del proyecto se utilizó **ChatGPT** como herramienta de apoyo para:
 
 - Resolver errores durante el desarrollo.
-- Comprender mensajes de error de PostgreSQL.
+![correccion de error](./Capturas%20IA/correccion%20de%20errores.png) ![correccion de error](./Capturas%20IA/correccion%20de%20errores%202.png) 
+- Comprender funciones de PostgreSQL.
+![pg](./Capturas%20IA/pg%201.png) 
 - Elaborar pruebas automatizadas con Vitest y Supertest.
-
-
----
-
-# 🌐 Deployment
-
-La API fue desplegada utilizando **Railway**.
-
-### Aplicación
-https://proyectom2valentinaleyva-production.up.railway.app/
-
-### Documentación Swagger
-https://proyectom2valentinaleyva-production.up.railway.app/api-docs/
+![test](./Capturas%20IA/test.png) 

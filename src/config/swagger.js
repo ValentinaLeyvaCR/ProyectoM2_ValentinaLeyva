@@ -1,17 +1,33 @@
-const { server } = require("../server");
-
 const swaggerSpec = {
     openapi: "3.0.3",
 
     info: {
         title: "API MiniBlog",
         version: "1.0.0",
-        description: "API REST para la gestión de autores y posts."
+        description: "API REST para la gestión de autores y publicaciones."
     },
 
     servers: [
         {
-            url: process.env.NODE_ENV = 'production' ? "https://proyectom2valentinaleyva-production.up.railway.app" : "http://localhost:3000"
+            url:
+                process.env.NODE_ENV === "production"
+                    ? "https://proyectom2valentinaleyva-production.up.railway.app"
+                    : "http://localhost:3000"
+        }
+    ],
+
+    tags: [
+        {
+            name: "General",
+            description: "Endpoints generales de la API"
+        },
+        {
+            name: "Authors",
+            description: "Operaciones CRUD para autores"
+        },
+        {
+            name: "Posts",
+            description: "Operaciones CRUD para publicaciones"
         }
     ],
 
@@ -19,6 +35,7 @@ const swaggerSpec = {
 
         "/": {
             get: {
+                tags: ["General"],
                 summary: "Mensaje de bienvenida",
                 description: "Verifica que el servidor esté funcionando.",
                 responses: {
@@ -32,6 +49,7 @@ const swaggerSpec = {
         "/authors": {
 
             get: {
+                tags: ["Authors"],
                 summary: "Obtener todos los autores",
                 responses: {
                     200: {
@@ -41,6 +59,7 @@ const swaggerSpec = {
             },
 
             post: {
+                tags: ["Authors"],
                 summary: "Crear un autor",
                 requestBody: {
                     required: true,
@@ -58,7 +77,8 @@ const swaggerSpec = {
                                     bio: {
                                         type: "string"
                                     }
-                                }
+                                },
+                                required: ["name", "email"]
                             }
                         }
                     }
@@ -78,6 +98,7 @@ const swaggerSpec = {
         "/authors/{id}": {
 
             get: {
+                tags: ["Authors"],
                 summary: "Obtener un autor por ID",
                 parameters: [
                     {
@@ -100,6 +121,7 @@ const swaggerSpec = {
             },
 
             put: {
+                tags: ["Authors"],
                 summary: "Actualizar un autor",
                 parameters: [
                     {
@@ -143,6 +165,7 @@ const swaggerSpec = {
             },
 
             delete: {
+                tags: ["Authors"],
                 summary: "Eliminar un autor",
                 parameters: [
                     {
@@ -169,15 +192,17 @@ const swaggerSpec = {
         "/posts": {
 
             get: {
+                tags: ["Posts"],
                 summary: "Obtener todos los posts",
                 responses: {
                     200: {
-                        description: "Lista de posts obtenida correctamente"
+                        description: "Lista de publicaciones obtenida correctamente"
                     }
                 }
             },
 
             post: {
+                tags: ["Posts"],
                 summary: "Crear un post",
                 requestBody: {
                     required: true,
@@ -198,7 +223,12 @@ const swaggerSpec = {
                                     published: {
                                         type: "boolean"
                                     }
-                                }
+                                },
+                                required: [
+                                    "author_id",
+                                    "title",
+                                    "content"
+                                ]
                             }
                         }
                     }
@@ -218,6 +248,7 @@ const swaggerSpec = {
         "/posts/{id}": {
 
             get: {
+                tags: ["Posts"],
                 summary: "Obtener un post por ID",
                 parameters: [
                     {
@@ -240,6 +271,7 @@ const swaggerSpec = {
             },
 
             put: {
+                tags: ["Posts"],
                 summary: "Actualizar un post",
                 parameters: [
                     {
@@ -286,6 +318,7 @@ const swaggerSpec = {
             },
 
             delete: {
+                tags: ["Posts"],
                 summary: "Eliminar un post",
                 parameters: [
                     {
@@ -312,8 +345,8 @@ const swaggerSpec = {
         "/posts/author/{authorId}": {
 
             get: {
+                tags: ["Posts"],
                 summary: "Obtener los posts de un autor",
-
                 parameters: [
                     {
                         name: "authorId",
@@ -324,7 +357,6 @@ const swaggerSpec = {
                         }
                     }
                 ],
-
                 responses: {
                     200: {
                         description: "Posts encontrados correctamente"
